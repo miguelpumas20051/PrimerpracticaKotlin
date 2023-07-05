@@ -13,9 +13,9 @@ import android.widget.*
 
 class MainActivity : AppCompatActivity() {
 
-    var lista: ListView?= null
-    var grid:GridView ?= null
-    var viewSwitchter: ViewSwitcher ?= null
+    var lista: ListView? = null
+    var grid: GridView? = null
+    var viewSwitchter: ViewSwitcher?= null
 
 
     companion object {
@@ -25,36 +25,23 @@ class MainActivity : AppCompatActivity() {
 
         fun agregarContacto(contacto: Contacto) {
             adaptador?.addItem(contacto)
-//            adaptadorGrid?.addItem(contacto)
-        }
-
-        fun agregarContacto2(contacto: Contacto) {
             adaptadorGrid?.addItem(contacto)
         }
 
-
-
-        fun obtenerContacto(index:Int):Contacto{
+        fun obtenerContacto(index: Int): Contacto{
             return adaptador?.getItem(index) as Contacto
         }
-//        fun obtenerContacto2(index:Int):Contacto{
-//            return adaptadorGrid?.getItem(index) as Contacto
-//        }
-        fun eliminarContacto(index:Int){
-            adaptador?.removeItem(index)
 
-//            adaptadorGrid?.removeItem(index)
-        }
-        fun eliminarContacto2(index:Int){
+        fun eliminarContacto(index: Int){
+            adaptador?.removeItem(index)
             adaptadorGrid?.removeItem(index)
         }
-        fun actualizarContacto(index:Int,nuevoContacto:Contacto){
-            adaptador?.updateItem(index,nuevoContacto)
-            adaptadorGrid?.updateItem(index,nuevoContacto)
+
+        fun actualizarContacto(index: Int, nuevoContacto: Contacto){
+            adaptador?.updateItem(index, nuevoContacto)
+            adaptadorGrid?.updateItem(index, nuevoContacto)
         }
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,11 +58,11 @@ class MainActivity : AppCompatActivity() {
 
 
         lista = findViewById<ListView>(R.id.lista)
-        grid= findViewById<GridView>(R.id.grid)
-        adaptador= AdaptadorCutsom(this,contactos!!,)
-        adaptadorGrid= adapatadorCustomGrid(this,contactos!!)
+        grid = findViewById<GridView>(R.id.grid)
+        adaptador = AdaptadorCutsom(this,contactos!!)
+        adaptadorGrid = adapatadorCustomGrid(this,contactos!!)
 
-        viewSwitchter= findViewById(R.id.viewSwitcher)
+        viewSwitchter = findViewById(R.id.viewSwitcher)
 
         lista?.adapter = adaptador
         grid?.adapter = adaptadorGrid
@@ -140,14 +127,13 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
             R.id.iNuevo ->{
-                val intent = Intent(this,Nuevo::class.java)
+                val intent = Intent(this, Nuevo::class.java)
                 startActivity(intent)
                 return true
             }else ->{
-                return super.onOptionsItemSelected(item)
-            }
+            return super.onOptionsItemSelected(item)
         }
-
+        }
     }
 
     override fun onResume() {
