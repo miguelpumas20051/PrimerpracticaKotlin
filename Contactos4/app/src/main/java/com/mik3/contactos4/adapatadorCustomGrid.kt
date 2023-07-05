@@ -8,53 +8,51 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 
-class adapatadorCustomGrid(var contexto:Context, items:ArrayList<Contacto>): BaseAdapter() {
-    var items: ArrayList<Contacto>?= null
-    var copiaItems:ArrayList<Contacto>?= null
+class adapatadorCustomGrid(var contexto: Context, items: ArrayList<Contacto>): BaseAdapter() {
+    var items: ArrayList<Contacto>? = null
+    var copiaItems:ArrayList<Contacto>? = null
     //alamacenar los elementos que se van a mostrar en el listview
     init {
         this.items= ArrayList(items)
         this.copiaItems=items
     }
 
-
     override fun getCount(): Int {
         //regresar el numero de elementos de mi lista
         return this.items?.count()!!
     }
 
-    fun addItem(item: Contacto){
+    fun addItem(item: Contacto) {
         copiaItems?.add(item)
-        items= ArrayList(copiaItems)
+        items = ArrayList(copiaItems)
         notifyDataSetChanged()
     }
 
-    fun removeItem(index:Int){
+    fun removeItem(index: Int) {
         copiaItems?.removeAt(index)
-        items= ArrayList(copiaItems)
+        items = ArrayList(copiaItems)
         notifyDataSetChanged()
 
     }
 
-    fun updateItem(index:Int, newItem:Contacto){
-        copiaItems?.set(index,newItem)
-        items= ArrayList(copiaItems)
+    fun updateItem(index: Int, newItem: Contacto) {
+        copiaItems?.set(index, newItem)
+        items = ArrayList(copiaItems)
         notifyDataSetChanged()
     }
 
-    fun filtrar(str: String){
+    fun filtrar(str: String) {
         items?.clear()
         if(str.isEmpty()){
-            items= ArrayList(copiaItems)
+            items = ArrayList(copiaItems)
             notifyDataSetChanged()
             return
         }
 
-        var busqueda=str
-        busqueda=busqueda.lowercase()
-        for(item in copiaItems!!){
-            val nombre= item.nombre.lowercase()
-            if(nombre.contains(busqueda)){
+        var busqueda = str.lowercase()
+        for(item in copiaItems!!) {
+            val nombre = item.nombre.lowercase()
+            if(nombre.contains(busqueda)) {
                 items?.add(item)
             }
         }
@@ -76,14 +74,14 @@ class adapatadorCustomGrid(var contexto:Context, items:ArrayList<Contacto>): Bas
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var viewHolder:ViewHolder? = null
-        var vista:View? = convertView
+        var viewHolder: ViewHolder? = null
+        var vista: View? = convertView
 
-        if(vista==null){
+        if(vista == null) {
             vista= LayoutInflater.from(contexto).inflate(R.layout.template_contacto_grid,null)
             viewHolder= ViewHolder(vista)
             vista.tag=viewHolder
-        }else{
+        } else {
             viewHolder=vista.tag as? ViewHolder
         }
         val item = getItem(position) as Contacto
@@ -94,12 +92,12 @@ class adapatadorCustomGrid(var contexto:Context, items:ArrayList<Contacto>): Bas
         return vista!!
     }
 
-    private class ViewHolder(vista:View){
+    private class ViewHolder(vista: View) {
         var nombre: TextView? = null
         var foto: ImageView? = null
         init {
             nombre = vista.findViewById(R.id.tvNombre3)
-            foto=vista.findViewById(R.id.ivFoto3)
+            foto = vista.findViewById(R.id.ivFoto3)
         }
     }
 }

@@ -11,17 +11,17 @@ import android.widget.TextView
 import android.widget.Toast
 import org.w3c.dom.Text
 
-class AdaptadorCutsom (var contexto: Context, items: ArrayList<Contacto>):BaseAdapter(){
+class AdaptadorCutsom (var contexto: Context, items: ArrayList<Contacto>): BaseAdapter(){
 
-    var items: ArrayList<Contacto>?= null
-    var copiaItems:ArrayList<Contacto>?= null
-    var vistaPantalla:String ?= null
+    var items: ArrayList<Contacto>? = null
+    var copiaItems: ArrayList<Contacto>? = null
+    var vistaPantalla: String? = null
 
-    //alamacenar los elementos que se van a mostrar en el listview
+    //almacenar los elementos que se van a mostrar en el listview
     init {
-        this.items= ArrayList(items)
-        this.copiaItems=items
-        this.vistaPantalla=vistaPantalla
+        this.items = ArrayList(items)
+        this.copiaItems = items
+        this.vistaPantalla = vistaPantalla
     }
 
 
@@ -31,37 +31,34 @@ class AdaptadorCutsom (var contexto: Context, items: ArrayList<Contacto>):BaseAd
     }
 
     fun addItem(item: Contacto){
-        copiaItems?.add(item)
-        items= ArrayList(copiaItems)
+        items?.add(item)
         notifyDataSetChanged()
     }
 
-    fun removeItem(index:Int){
-        copiaItems?.removeAt(index)
-        items= ArrayList(copiaItems)
+    fun removeItem(index: Int){
+        items?.removeAt(index)
         notifyDataSetChanged()
     }
 
-    fun updateItem(index:Int, newItem:Contacto){
-        copiaItems?.set(index,newItem)
-//        items= ArrayList(copiaItems)
+    fun updateItem(index: Int, newItem: Contacto){
+        items?.set(index, newItem)
         notifyDataSetChanged()
     }
 
     fun filtrar(str: String){
-        items?.clear()
+        copiaItems?.clear()
         if(str.isEmpty()){
-            items= ArrayList(copiaItems)
+            copiaItems= ArrayList(items)
             notifyDataSetChanged()
             return
         }
 
-        var busqueda=str
-        busqueda=busqueda.lowercase()
-        for(item in copiaItems!!){
-            val nombre= item.nombre.lowercase()
+        var busqueda = str
+        busqueda = busqueda.lowercase()
+        for(item in items!!){
+            val nombre = item.nombre.lowercase()
             if(nombre.contains(busqueda)){
-                items?.add(item)
+                copiaItems?.add(item)
             }
         }
         notifyDataSetChanged()
@@ -78,18 +75,17 @@ class AdaptadorCutsom (var contexto: Context, items: ArrayList<Contacto>):BaseAd
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var viewHolder:ViewHolder? = null
-        var vista:View? = convertView
+        var viewHolder: ViewHolder? = null
+        var vista: View? = convertView
 
-        if(vista==null){
-
-                vista=LayoutInflater.from(contexto).inflate(R.layout.template_contacto,null)
-                viewHolder= ViewHolder(vista)
-                vista.tag=viewHolder
-
-        }else{
+        if(vista == null){
+            vista=LayoutInflater.from(contexto).inflate(R.layout.template_contacto,null)
+            viewHolder= ViewHolder(vista)
+            vista.tag=viewHolder
+        } else {
             viewHolder=vista.tag as? ViewHolder
         }
+
         val item = getItem(position) as Contacto
         //Asiganacion de valores a elementos graficos
         viewHolder?.nombre?.text = item.nombre + " " + item.apellidos
@@ -99,14 +95,14 @@ class AdaptadorCutsom (var contexto: Context, items: ArrayList<Contacto>):BaseAd
         return vista!!
     }
 
-    private class ViewHolder(vista:View){
-        var nombre:TextView? = null
-        var foto:ImageView? = null
-        var empresa:TextView? = null
+    private class ViewHolder(vista: View){
+        var nombre: TextView? = null
+        var foto: ImageView? = null
+        var empresa: TextView? = null
         init {
             nombre = vista.findViewById(R.id.tvNombre)
-            empresa= vista.findViewById(R.id.tvEmpresa)
-            foto=vista.findViewById(R.id.ivFoto)
+            empresa = vista.findViewById(R.id.tvEmpresa)
+            foto = vista.findViewById(R.id.ivFoto)
         }
     }
 }
